@@ -3,7 +3,7 @@ const int matxHeight = 13;
 
 const int restoreDelay = 1;
 
-// indicating which grid is valid.
+// 表明矩阵可用格子的真值表（剔除了四个角）
 const bool gridMap[matxWidth][matxHeight] = {
 false,false,false,false,true, true, true, true, true, false,false,false,false,
 false,false,false,true, true, true, true, true, true, true, false,false,false,
@@ -20,6 +20,7 @@ false,false,false,true, true, true, true, true, true, true, false,false,false,
 false,false,false,false,true, true, true, true, true, false,false,false,false
 };
 
+// 矩阵格子（气缸）的动作状态表（等于0为不激活，大于0为激活）
 int valMap[matxWidth][matxHeight];
 
 // if we want continous animation
@@ -37,8 +38,7 @@ void action_setActive(int i, int j)
 
     valMap[i][j] = restoreDelay;
 
-    // !TODO: The actual code the make the actuator active
-    //        YOUR CODE setting [i][j] to active
+    // !TODO: 在这里写你的驱动某个（即第i,j个）气缸 上升 的代码
 }
 void action_setDeactive(int i, int j)
 {
@@ -46,8 +46,7 @@ void action_setDeactive(int i, int j)
     if (j < 0 || j >= matxWidth) return;
     if (!gridMap[i][j] ) return;
 
-    // !TODO: The actual code the make the actuator active
-    //        YOUR CODE setting [i][j] to deactive!
+    // !TODO: 在这里写你的驱动某个（即第i,j个）气缸 下降 的代码
 }
 
 void start_diffusion(int x, int y) 
@@ -93,12 +92,14 @@ void diffusion_routine(int step)
 
 #define _abstract
 
-// !TODO: CHANGE this to fit your code.
+// !TODO: 这是第i,j个按钮按下的时候需要调用的函数，
+//          请你在合适的地方（按按钮的时候）调用.
 _abstract void on_button_pressed(int i, int j){
   start_diffusion(i, j);
 }
 
-// !TODO: CHANGE this to fit your code.
+// !TODO: 这是每个动画帧刷新的时候需要调用的函数.
+//          请你在你自己实现的定时器里面调用。
 _abstract void on_every_timer_tick() {
   
     diffusion_routine(diffusionStep++);
@@ -127,7 +128,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  // !TODO: your should write a more stable timer
+  // !TODO: 我建议你写一个定长时间的定时器，让他每次都调用on_every_timer_tick()，
+  //        不然，像下面这样，你的动画效果可能不会太完美。
   on_every_timer_tick();
   delay(20);
 
