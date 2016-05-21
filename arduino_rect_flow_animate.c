@@ -128,8 +128,12 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
-  // !TODO: 我建议你写一个定长时间的定时器，让他每次都调用on_every_timer_tick()，
+  // !TODO: 我建议你写一个定长时间的定时器，让它每次都调用on_every_timer_tick()，
   //        不然，像下面这样，你的动画效果可能不会太完美。
+  //
+  //        关于Arduino定时器：http://playground.arduino.cc/Code/Timer
+  //        例如，用timer1.every(20, on_every_timer_tick);
+  
   on_every_timer_tick();
   delay(20);
 
